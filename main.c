@@ -121,6 +121,10 @@ int main(int argc, char *argv[])
 
             state.FILENO = fd;
             do_awk(program, state);
+
+            if (close(fd) < 0) {
+                message("ERROR", "File cannot be read\n");
+            }
         }
 
     }
