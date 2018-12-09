@@ -14,7 +14,7 @@
 #include "utils.h"
 
 
-char **str_split(const char *b_str, const char a_delim) {
+string_array_t str_split(const char *b_str, const char a_delim) {
     char a_str[strlen(b_str)];
     strcpy(a_str, b_str);
     char *tmp = a_str;
@@ -58,7 +58,11 @@ char **str_split(const char *b_str, const char a_delim) {
         *(result + idx) = 0;
     }
 
-    return result;
+    string_array_t arr;
+    arr.array = result;
+    arr.size = count - 1;
+
+    return arr;
 }
 
 
@@ -94,7 +98,10 @@ int do_awk(char* program, program_state state){
 
         state.RECORD = record;
         state.NR++;
-        state.FIELDS = str_split(state.RECORD, state.FS);
+
+        string_array_t arr = str_split(state.RECORD, state.FS);
+        state.FIELDS = arr.array;
+        state.NF = arr.size;
 
     }
 

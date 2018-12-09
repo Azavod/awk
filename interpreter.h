@@ -17,6 +17,11 @@ typedef struct {
     char **FIELDS;  // fields in current record
 } program_state;
 
+typedef struct {
+    char** array;
+    size_t size;
+} string_array_t;
+
 int do_awk(char* program, program_state state);
 
 #endif //AWK_INTERPRETER_H
