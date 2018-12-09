@@ -9,8 +9,8 @@ typedef struct {
     int FILENO;
     char FS;        // fields separator
     char RS;        // rows separator
-    int NF;         // number of fields
-    int NR;         // number of rows
+    size_t NF;         // number of fields
+    size_t NR;         // number of rows
     char OFS;       // output fields separator
     char ORS;       // output rows separator
     char *RECORD;   // current record
