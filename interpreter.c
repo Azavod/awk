@@ -12,6 +12,7 @@
 #include <assert.h>
 #include "interpreter.h"
 #include "utils.h"
+#include "parser.h"
 
 
 string_array_t str_split(const char *b_str, const char a_delim) {
@@ -66,12 +67,15 @@ string_array_t str_split(const char *b_str, const char a_delim) {
 }
 
 
-int do_awk(char* program, program_state state){
+int do_awk(char* code, program_state state){
 
     state.NF = 0;
     state.NR = 0;
     state.FIELDS = NULL;
     state.RECORD = NULL;
+
+    program pr;
+    pr = parse_blocks(code);
 
     struct stat fsbuf;
     if (fstat(state.FILENO, &fsbuf) < 0) {
