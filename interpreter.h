@@ -22,6 +22,16 @@ typedef struct {
     size_t size;
 } string_array_t;
 
+typedef struct token{
+    struct token* prev;
+
+    char prev_separator;
+    char* token;
+    char next_separator;
+
+    struct token* next;
+} token;
+
 int do_awk(char* program, program_state state);
 
 #endif //AWK_INTERPRETER_H

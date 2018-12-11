@@ -77,6 +77,9 @@ int do_awk(char* code, program_state state){
     program pr;
     pr = parse_blocks(code);
 
+    free_structure(pr.begin_block);
+    pr.begin_block = NULL;
+
     struct stat fsbuf;
     if (fstat(state.FILENO, &fsbuf) < 0) {
         message("ERROR", "File cannot be read\n");
@@ -107,7 +110,14 @@ int do_awk(char* code, program_state state){
         state.FIELDS = arr.array;
         state.NF = arr.size;
 
+
     }
+
+    free_structure(pr.main_block);
+    pr.main_block = NULL;
+    
+    free_structure(pr.end_block);
+    pr.end_block = NULL;
 
     return 0;
 
