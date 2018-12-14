@@ -40,26 +40,34 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
 
 token* _parse_code_block(char* code){
 
+    char code_copy[strlen(code)];
+    strcpy(code_copy, code);
+
+    int ind = 0;
+
     char separators[] = " ;\t\n";
 
     token* start_token = (token*)malloc(sizeof(token));
     start_token->prev = NULL;
-    start_token->prev_separator = '\0';
     start_token->token = strtok(code, separators);
+    ind += strlen(start_token->token);
+    start_token->separator = code_copy[ind];
 
     token* current_token = start_token;
     while (current_token->token) {
         token* new_token = (token*)malloc(sizeof(token));
 
-        current_token->next = new_token;
-        current_token->next_separator = '\0';
-
         new_token->prev = current_token;
-        new_token->prev_separator = '\0';
         new_token->token = strtok(NULL, separators);
         new_token->next = NULL;
-        new_token->next_separator = '\0';
+        if (new_token->token){
+            ind += strlen(new_token->token) + 1;
+            new_token->separator = code_copy[ind];
+        } else {
+            new_token->separator = '\0';
+        }
 
+        current_token->next = new_token;
         current_token = new_token;
     }
 
