@@ -27,7 +27,7 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
         }
     }
 
-    if (!block_start || block_end){
+    if (!block_start || !block_end){
         return NULL;
     }
 
@@ -105,7 +105,7 @@ program parse_blocks(char* code){
     pr.main_block = _parse_code_block(_get_block(& code, '{', '}'));
 
     char* end_block = strstr(code, "END");
-    if (begin_block != NULL){
+    if (end_block != NULL){
         code = end_block;
         pr.end_block = _parse_code_block(_get_block(& code, '{', '}'));
     } else {

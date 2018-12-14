@@ -18,5 +18,7 @@ int print(token** tok_ptr, program_state state){
         tok = *tok_ptr;
     }
 
+    write(STDOUT_FILENO, &state.ORS, strlen(&state.ORS));
+
     return 0;
 }
