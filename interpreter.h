@@ -5,6 +5,17 @@
 #ifndef AWK_INTERPRETER_H
 #define AWK_INTERPRETER_H
 
+#include <wchar.h>
+#include <unistd.h>
+#include <printf.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <assert.h>
+
+#include "utils.h"
+
 typedef struct {
     int FILENO;
     char FS;        // fields separator

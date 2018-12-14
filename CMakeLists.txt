@@ -9,4 +9,4 @@ add_executable(
         main.c
         interpreter.c interpreter.h
         utils.c utils.h
-        parser.c parser.h)
+        parser.c parser.h functions.c functions.h)

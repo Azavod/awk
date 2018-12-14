@@ -2,18 +2,8 @@
 // Created by andrey.zavodov on 07.12.18.
 //
 
-#include <wchar.h>
-#include <unistd.h>
-#include <printf.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <assert.h>
 #include "interpreter.h"
-#include "utils.h"
 #include "parser.h"
-
 
 string_array_t str_split(const char *b_str, const char a_delim) {
     char a_str[strlen(b_str)];
@@ -77,6 +67,7 @@ int do_awk(char* code, program_state state){
     program pr;
     pr = parse_blocks(code);
 
+    execute_block(pr.begin_block, state);
     free_structure(pr.begin_block);
     pr.begin_block = NULL;
 
@@ -110,12 +101,14 @@ int do_awk(char* code, program_state state){
         state.FIELDS = arr.array;
         state.NF = arr.size;
 
+        execute_block(pr.main_block, state);
 
     }
 
     free_structure(pr.main_block);
     pr.main_block = NULL;
-    
+
+    execute_block(pr.end_block, state);
     free_structure(pr.end_block);
     pr.end_block = NULL;
 

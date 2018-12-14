@@ -5,7 +5,12 @@
 #ifndef AWK_PARSER_H
 #define AWK_PARSER_H
 
+#include <memory.h>
+#include <stdlib.h>
+#include <printf.h>
+
 #include "interpreter.h"
+#include "functions.h"
 
 typedef struct {
     token* begin_block;
@@ -15,5 +20,6 @@ typedef struct {
 
 program parse_blocks(char* code);
 void free_structure(token* tok);
+int execute_block(token* code, program_state state);
 
 #endif //AWK_PARSER_H

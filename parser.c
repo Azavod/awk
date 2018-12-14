@@ -2,11 +2,7 @@
 // Created by andrey.zavodov on 10.12.18.
 //
 
-#include <memory.h>
-#include <stdlib.h>
-#include <printf.h>
 #include "parser.h"
-#include "interpreter.h"
 
 char* _get_block(char** code_ptr, char start_br, char end_br){
 
@@ -104,4 +100,32 @@ program parse_blocks(char* code){
 
     return pr;
 
+}
+
+int _execute_token(token** tok_ptr, program_state state){
+
+    token* tok = *tok_ptr;
+
+    if (strcmp(tok->token, "print") == 0){
+        return print(tok_ptr, state);
+    } else {
+        (*tok_ptr) = tok->next;
+        return 0;
+    }
+
+}
+
+int execute_block(token* tok, program_state state){
+
+    while (tok->token){
+
+        int status = _execute_token(&tok, state);
+
+        if (status){
+            return status;
+        }
+
+    }
+
+    return 0;
 }
