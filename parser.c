@@ -27,6 +27,10 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
         }
     }
 
+    if (!block_start || block_end){
+        return NULL;
+    }
+
     size_t len = block_end - block_start + 1;
     char* new_string = (char*)malloc(len);
 
@@ -39,6 +43,10 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
 }
 
 token* _parse_code_block(char* code){
+
+    if (!code){
+        return NULL;
+    }
 
     char code_copy[strlen(code)];
     strcpy(code_copy, code);
@@ -74,7 +82,7 @@ token* _parse_code_block(char* code){
 
 void free_structure(token* tok){
 
-    while(tok->next){
+    while(tok && tok->next){
         tok = tok->next;
         free(tok->prev);
     }
@@ -123,7 +131,7 @@ int _execute_token(token** tok_ptr, program_state state){
 
 int execute_block(token* tok, program_state state){
 
-    while (tok->token){
+    while (tok && tok->token){
 
         int status = _execute_token(&tok, state);
 
