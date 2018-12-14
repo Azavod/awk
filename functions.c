@@ -7,10 +7,16 @@
 int print(token** tok_ptr, program_state state){
 
     (*tok_ptr) = (*tok_ptr)->next;
-
     token* tok = *tok_ptr;
 
-    write(STDOUT_FILENO, tok->token, strlen(tok->token));
-    
+    while (tok->token && strcmp(tok->token, "}") != 0 && tok->separator != ';') {
+        write(STDOUT_FILENO, tok->token, strlen(tok->token));
+        if (tok->separator == ','){
+            write(STDOUT_FILENO, " ", strlen(" "));
+        }
+        (*tok_ptr) = (*tok_ptr)->next;
+        tok = *tok_ptr;
+    }
+
     return 0;
 }

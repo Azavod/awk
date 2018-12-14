@@ -43,15 +43,13 @@ token* _parse_code_block(char* code){
     char code_copy[strlen(code)];
     strcpy(code_copy, code);
 
-    int ind = 0;
-
-    char separators[] = " ;\t\n";
+    char separators[] = " ;,\t\n";
 
     token* start_token = (token*)malloc(sizeof(token));
     start_token->prev = NULL;
     start_token->token = strtok(code, separators);
-    ind += strlen(start_token->token);
-    start_token->separator = code_copy[ind];
+    size_t sep_ind = start_token->token + strlen(start_token->token) - code;
+    start_token->separator = code_copy[sep_ind];
 
     token* current_token = start_token;
     while (current_token->token) {
@@ -61,8 +59,8 @@ token* _parse_code_block(char* code){
         new_token->token = strtok(NULL, separators);
         new_token->next = NULL;
         if (new_token->token){
-            ind += strlen(new_token->token) + 1;
-            new_token->separator = code_copy[ind];
+            sep_ind = new_token->token + strlen(new_token->token) - code;
+            new_token->separator = code_copy[sep_ind];
         } else {
             new_token->separator = '\0';
         }
