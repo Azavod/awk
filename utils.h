@@ -11,5 +11,6 @@
 #include <unistd.h>
 
 void message(char *type, char *msg);
+int isnumber(const char* str);
 
 #endif //AWK_UTILS_H
