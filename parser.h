@@ -7,7 +7,6 @@
 
 #include <memory.h>
 #include <stdlib.h>
-#include <printf.h>
 
 #include "interpreter.h"
 #include "functions.h"

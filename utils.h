@@ -5,7 +5,6 @@
 #ifndef AWK_UTILS_H
 #define AWK_UTILS_H
 
-#include <printf.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <unistd.h>

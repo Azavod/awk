@@ -7,7 +7,6 @@
 
 #include <wchar.h>
 #include <unistd.h>
-#include <printf.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
