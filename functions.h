@@ -6,6 +6,7 @@
 #define AWK_FUNCTIONS_H
 
 #include "interpreter.h"
+#include "utils.h"
 #include <unistd.h>
 #include <memory.h>
 
