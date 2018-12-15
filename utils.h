@@ -8,6 +8,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 void message(char *type, char *msg);
 int isnumber(const char* str);

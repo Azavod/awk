@@ -34,7 +34,7 @@ string_array_t str_split(const char *b_str, const char a_delim) {
        knows where the list of returned strings ends. */
     count++;
 
-    result = malloc(sizeof(char *) * count);
+    result = (char**)malloc(sizeof(char *) * count);
 
     if (result) {
         size_t idx = 0;

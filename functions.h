@@ -7,6 +7,8 @@
 
 #include "interpreter.h"
 #include "utils.h"
+
+#include <string.h>
 #include <unistd.h>
 #include <memory.h>
 
