@@ -42,6 +42,39 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
     }
 }
 
+void _merge_literals(token* start_token){
+
+    token* current_token = start_token;
+
+    while (current_token->token){
+        if (current_token->token[0] == '"' && current_token->token[strlen(current_token->token)-1] != '"'){
+
+            if (!current_token->next || !current_token->next->token){
+                message("ERROR", "Invalid sequence of brackets.");
+            }
+
+            do {
+
+                char* new_str = (char*)malloc(strlen(current_token->token) + strlen(current_token->next->token) + 1);
+                strcat(new_str, current_token->token);
+                strcat(new_str, current_token->separator);
+                strcat(new_str,current_token->next->token);
+
+                current_token->token = new_str;
+                current_token->separator = current_token->next->separator;
+                token* tmp_tok = current_token->next;
+                current_token->next = current_token->next->next;
+
+
+            } while (current_token->token[strlen(current_token->token)-1] != '"' && current_token->next);
+
+        } else {
+            current_token = current_token->next;
+        }
+    }
+
+}
+
 token* _parse_code_block(char* code){
 
     if (!code){
@@ -56,8 +89,7 @@ token* _parse_code_block(char* code){
     token* start_token = (token*)malloc(sizeof(token));
     start_token->prev = NULL;
     start_token->token = strtok(code, separators);
-    size_t sep_ind = start_token->token + strlen(start_token->token) - code;
-    start_token->separator = code_copy[sep_ind];
+    start_token->separator = "";
 
     token* current_token = start_token;
     while (current_token->token) {
@@ -66,16 +98,21 @@ token* _parse_code_block(char* code){
         new_token->prev = current_token;
         new_token->token = strtok(NULL, separators);
         new_token->next = NULL;
+        new_token->separator = "";
+
         if (new_token->token){
-            sep_ind = new_token->token + strlen(new_token->token) - code;
-            new_token->separator = code_copy[sep_ind];
-        } else {
-            new_token->separator = '\0';
+            char* start = code_copy + (current_token->token + strlen(current_token->token) - code);
+            char* end = code_copy + (new_token->token - code);
+            size_t len = end - start;
+            char* new_sep = (char*)malloc(len);
+            current_token->separator = strncpy(new_sep, start, len);
         }
 
         current_token->next = new_token;
         current_token = new_token;
     }
+
+    _merge_literals(start_token);
 
     return start_token;
 }

@@ -9,9 +9,9 @@ int print(token** tok_ptr, program_state state){
     (*tok_ptr) = (*tok_ptr)->next;
     token* tok = *tok_ptr;
 
-    while (tok->token && strcmp(tok->token, "}") != 0 && tok->separator != ';') {
+    while (tok->token && strcmp(tok->token, "}") != 0 && !strstr(tok->separator, ";")) {
         write(STDOUT_FILENO, tok->token, strlen(tok->token));
-        if (tok->separator == ','){
+        if (strstr(tok->separator, ",")){
             write(STDOUT_FILENO, " ", strlen(" "));
         }
         (*tok_ptr) = (*tok_ptr)->next;

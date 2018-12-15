@@ -37,7 +37,7 @@ typedef struct token{
     struct token* prev;
 
     char* token;
-    char separator;
+    char* separator;
 
     struct token* next;
 } token;
