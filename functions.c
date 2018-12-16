@@ -56,3 +56,30 @@ int print(token** tok_ptr, program_state state){
 
     return 0;
 }
+
+
+int check_regex(char* record, char* pattern){
+    regex_t regex;
+
+    int reti = regcomp(&regex, pattern, 0);
+
+    if (reti) {
+        message("ERROR", "Could not compile regex.");
+    }
+
+    reti = regexec(&regex, record, 0, NULL, 0);
+
+    if (!reti) {
+        regfree(&regex);
+        return 1;
+    }
+    else if (reti == REG_NOMATCH) {
+        regfree(&regex);
+        return 0;
+    }
+    else {
+        message("ERROR", "Regex match failed");
+    }
+
+
+}

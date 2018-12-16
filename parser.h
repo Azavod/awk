@@ -14,6 +14,7 @@
 
 typedef struct {
     token* begin_block;
+    char* regular_expression;
     token* main_block;
     token* end_block;
 } program;

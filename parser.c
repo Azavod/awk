@@ -11,21 +11,34 @@ char* _get_block(char** code_ptr, char start_br, char end_br){
     char* block_end = NULL;
     char* code = *code_ptr;
 
-    for (int i = 0; i < strlen(code); i++){
-        if (code[i] == start_br) {
-            br++;
-            if (br == 1) {
-                block_start = (code + i);
+    if (start_br != end_br){
+        for (int i = 0; i < strlen(code); i++){
+            if (code[i] == start_br) {
+                br++;
+                if (br == 1) {
+                    block_start = (code + i);
+                }
+            }
+            if (code[i] == end_br && br > 0) {
+                br--;
+                if (br == 0) {
+                    block_end = (code + i);
+                    break;
+                }
             }
         }
-        if (code[i] == end_br && br > 0) {
-            br--;
-            if (br == 0) {
-                block_end = (code + i);
+    } else {
+        for (int i = 0; i < strlen(code); i++){
+            if (code[i] == start_br && br == 0) {
+                br++;
+                block_start = (code + i + 1);
+            } else if (code[i] == end_br && br == 1) {
+                block_end = (code + i - 1);
                 break;
             }
         }
     }
+
 
     if (!block_start || !block_end){
         return NULL;
@@ -112,7 +125,7 @@ token* _parse_code_block(char* code){
         current_token = new_token;
     }
 
-    _merge_literals(start_token);
+ //   _merge_literals(start_token);
 
     return start_token;
 }
@@ -138,6 +151,8 @@ program parse_blocks(char* code){
     } else {
         pr.begin_block = NULL;
     }
+
+    pr.regular_expression = _get_block(& code, '/', '/');
 
     pr.main_block = _parse_code_block(_get_block(& code, '{', '}'));
 

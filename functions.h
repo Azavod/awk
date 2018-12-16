@@ -11,7 +11,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <memory.h>
+#include <regex.h>
 
 int print(token** token, program_state state);
+int check_regex(char* record, char* pattern);
 
 #endif //AWK_FUNCTIONS_H

@@ -101,7 +101,10 @@ int do_awk(char* code, program_state state){
         state.FIELDS = arr.array;
         state.NF = arr.size;
 
-        execute_block(pr.main_block, state);
+        if (!pr.regular_expression || check_regex(state.RECORD, pr.regular_expression)){
+            execute_block(pr.main_block, state);
+        }
+
 
     }
 
